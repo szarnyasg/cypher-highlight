@@ -1,0 +1,76 @@
+\documentclass{article}
+
+% thanks to http://tex.stackexchange.com/a/47579/71109
+\usepackage{ifxetex}
+\usepackage{ifluatex}
+\newif\ifxetexorluatex % a new conditional starts as false
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi>0
+   \xetexorluatextrue
+\fi
+
+\ifxetexorluatex
+  \usepackage{fontspec}
+\else
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage[lighttt]{lmodern}
+\fi
+
+\usepackage{textcomp}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage{upquote}
+
+\definecolor{keyword}{HTML}{2771a3}
+\definecolor{pattern}{HTML}{b53c2f}
+\definecolor{string}{HTML}{be681c}
+\definecolor{relation}{HTML}{7e4894}
+\definecolor{variable}{HTML}{107762}
+\definecolor{comment}{HTML}{8d9094}
+
+\lstset{
+	numbers=none,
+	stepnumber=1,
+	numbersep=5pt,
+	basicstyle=\small\ttfamily,
+	keywordstyle=\color{keyword}\bfseries\ttfamily,
+	commentstyle=\color{comment}\ttfamily,
+	stringstyle=\color{string}\ttfamily,
+	identifierstyle=,
+	showstringspaces=false,
+	aboveskip=3pt,
+	belowskip=3pt,
+	columns=flexible,
+	keepspaces=true,
+	breaklines=true,	
+	captionpos=b,
+	tabsize=2,
+	frame=none,
+}
+
+\lstset{upquote=true}
+
+\lstdefinelanguage{cypher}
+{
+	morekeywords={
+		MATCH, OPTIONAL, WHERE, NOT, AND, OR, XOR, RETURN, DISTINCT, ORDER, BY, ASC, ASCENDING, DESC, DESCENDING, UNWIND, AS, UNION, WITH, ALL, CREATE, DELETE, DETACH, REMOVE, SET, MERGE, SET, SKIP, LIMIT, IN, CASE, WHEN, THEN, ELSE, END,
+		INDEX, DROP, UNIQUE, CONSTRAINT, EXPLAIN, PROFILE, START,
+	}
+}
+
+
+\newcommand{\mycdots}{\cdot\!\cdot\!\cdot}
+\lstset{language=cypher,
+	literate=*
+	{...}{$\mycdots$}{1}
+	{theta}{$\theta$}{1}
+}
+
+\begin{document}
+
+\begin{lstlisting}[language=cypher, label=lst:cypher-example, caption=Example Cypher query]
+MATCH (n:N)-[r:R]->(m:M)
+RETURN n.name, r.weight + 2, m.id
+\end{lstlisting}
+
+\end{document}
